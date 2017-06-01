@@ -32,3 +32,18 @@ img{
 .movie-poster{
     margin: 20px;
 }
+
+/* .movie-info{
+    position: absolute;
+    top: 25%;
+    background: rgba(255, 255, 255, 0.72);
+    color: #fff;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .2s, visibility .2s;
+} */
+
+a img:hover{
+    opacity: 0.4;
+    filter: alpha(opacity=40);
+}

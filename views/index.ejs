@@ -24,8 +24,9 @@
 
             <div class="col-sm-12 movies">
                 <% for(let i = 0; i < movieData.length; i++) { %>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3 poster-hover">
                         <a href="/movie/<%= movieData[i].id %>"><img src="<%= imageBaseUrl + movieData[i].poster_path %>">
+                        <!-- <p class="movie-info"><%= movieData.title %></p> -->
                     </div>
                 <% } %>
             </div>
