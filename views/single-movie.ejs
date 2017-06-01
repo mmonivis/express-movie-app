@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div id="title" class="text-danger col-sm-12 text-center">
+                <h1><%= movieData.title %></h1>
+            </div>
+
+            <div class="col-sm-6 col-sm-offset-4 search-div">
+                <form id="search-form" class="form-inline" action="/search" method="post">
+                    <input id="search-bar" type="text" placeholder="Movie Title" name="searchString" />
+                    <button type="submit" class="btn btn-primary">Search!</button>
+                </form>
+            </div>
+
+            <div class="col-sm-4 movie-poster text-center">
+                <img src="<%= imageBaseUrl + movieData.poster_path %>" />
+            </div>
+
+            <div class="col-sm-6 movie-data">
+                <h2>Overview</h2>
+                    <%= movieData.overview %>
+
+                <h2>Release Date</h2>
+                    <%= movieData.release_date %>
+
+                <h2>Rating</h2>
+                    <%= Math.round(movieData.popularity) %>
+
+                <h2>Runtime</h2>
+                    <%= movieData.runtime %> minutes
+
+                <h2>Homepage</h2>
+                    <a href="<%= movieData.homepage %>"><%= movieData.title %></a>
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

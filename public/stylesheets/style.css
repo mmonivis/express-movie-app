@@ -1,7 +1,24 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  font-size: 40px;
+  /* font-size: 40px; */
+}
+
+h1{
+    font-size: 40px;
+}
+
+h2{
+    font-size: 20px;
+}
+
+.search-div{
+    margin-bottom: 10px;
+}
+
+#search-bar{
+    width: 50%;
+    height: 40px;
 }
 
 a {
@@ -10,4 +27,8 @@ a {
 
 img{
     max-width: 100%;
+}
+
+.movie-poster{
+    margin: 20px;
 }
