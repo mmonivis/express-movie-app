@@ -22,10 +22,14 @@ const imageBaseUrl = 'http://image.tmdb.org/t/p/w300';
 router.get('/', function(req, res, next) {
     request.get(nowPlayingUrl,(error, response, movieData)=>{
         var movieData = JSON.parse(movieData);
+        // console.log("================");
+        // console.log(req.session);
+        // console.log("================");
         res.render('index', {
             movieData: movieData.results,
             imageBaseUrl: imageBaseUrl,
-            titleHeader: 'Now Playing'
+            titleHeader: 'Now Playing',
+            sessionInfo: req.session
         });
     });
 });
@@ -74,6 +78,62 @@ router.get('/movie/:id',(req, res)=>{
 
     });
     // res.send(req.params.id);
+});
+
+router.get('/login', (req,res)=>{
+    res.render('login',{ })
+});
+
+router.post('/processLogin', (req,res)=>{
+    // res.json(req.body);
+    var email = req.body.email;
+    var password = req.body.password;
+    var selectQuery = "SELECT * FROM users WHERE email = ? AND password = ?";
+    connection.query(selectQuery,[email,password],(error,results)=>{
+        if(results.length == 1){
+            // Match found!
+            req.session.loggedin = true;
+            req.session.name = results.name;
+            req.session.email = results.email;
+            req.redirect('/?msg=loggedin');
+        }else{
+            // no registered user match
+            res.redirect('/login?msg=badLogin');
+        }
+    });
+});
+
+router.get('/register', (req,res)=>{
+    var message = req.query.msg;
+    if(message == 'badEmail'){
+        message = "This email is already registered.";
+    }
+    res.render('register',{ message: message })
+});
+
+router.post('/registerProcess', (req,res)=>{
+    // res.json(req.body);
+    var name = req.body.name;
+    var email = req.body.email;
+    var password = req.body.password;
+
+    var selectQuery = "SELECT * FROM users WHERE email = ?";
+    connection.query(selectQuery,[email],(error,results)=>{
+        if(results.length == 0){
+            // User is not in the db. Insert them
+            var insertQuery = "INSERT INTO users (name,email,password) VALUES (?,?,?)";
+            connection.query(insertQuery, [name,email,password], (error,results)=>{
+                // Add session vars -- name, email, loggedin, id
+                req.session.name = name;
+                req.session.email = email;
+                req.session.loggedin = true;
+                res.redirect('/?msg=registered');
+            });
+        }else{
+            // User is in the db. Send them back to register with error message
+            res.redirect('/register?msg=badEmail');
+        }
+    });
 });
 
 module.exports = router;
