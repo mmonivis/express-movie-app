@@ -5,6 +5,15 @@ var config = require('../config/config');
 
 // console.log(config);
 
+var mysql = require('mysql');
+var connection = mysql.createConnection({
+    host: config.sql.host,
+    user: config.sql.user,
+    password: config.sql.password,
+    database: config.sql.database
+});
+connection.connect();
+
 const apiBaseUrl = 'http://api.themoviedb.org/3';
 const nowPlayingUrl = apiBaseUrl + '/movie/now_playing?api_key='+config.apiKey;
 const imageBaseUrl = 'http://image.tmdb.org/t/p/w300';
